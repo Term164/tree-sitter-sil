@@ -1,7 +1,9 @@
 ;; Mark function blocks as new lexical scopes
 (struct_declaration
   name: (identifier) @type
-  body: (block) @scope)
+  (struct_field
+    name: (identifier) @field)*
+  ) @scope
 
 (function_declaration
   body: (block) @scope)
@@ -19,8 +21,8 @@
 
 ;; Parameter definitions
 (function_declaration
-  parameters: (identifier) @definition.parameter)
-
+  (identifier) @parameter.inner
+  @parameter.outer)
 ;; Variable declarations
 (variable_declaration
   name: (identifier) @definition.var)

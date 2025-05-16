@@ -10,7 +10,7 @@ function greet(name) {
   (function_declaration
     name: (identifier)
     (identifier)
-    (block (return_statement (expression
+    body: (block (return_statement (expression
       (binary_expression
         (expression
           (string_literal))

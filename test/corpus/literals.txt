@@ -138,3 +138,31 @@ include "file.incl";
 (source_file
   (include_statement
     (string_literal)))
+
+
+===
+prefix unary expression 
+===
+
+if(!(isValid(user))) {
+  log("Not valid");
+}
+
+----
+(source_file
+      (if_statement
+        (expression
+          (unary_expression
+            (expression
+              (expression
+                (function_call
+                  (identifier)
+                  (expression
+                    (identifier)))))))
+        (block
+          (expression_statement
+            (expression
+              (function_call
+                (identifier)
+                (expression
+                  (string_literal))))))))

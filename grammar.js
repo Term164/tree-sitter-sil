@@ -25,7 +25,10 @@ module.exports = grammar({
     $.comment, // ← single-line comments
   ],
 
-  conflicts: ($) => [[$.array_literal, $.structure_literal]],
+  conflicts: ($) => [
+    [$.expression, $._statement],
+    [$.array_literal, $.structure_literal], // keep your existing conflicts
+  ],
   /** -------------------------------------------------
    *  3. Main rules
    * -------------------------------------------------*/
@@ -63,8 +66,7 @@ module.exports = grammar({
       seq(
         field("type", $.type_specifier),
         field("name", $.identifier),
-        "=",
-        field("value", $.expression),
+        optional(seq("=", field("value", $.expression))),
         ";",
       ),
 
@@ -253,10 +255,17 @@ module.exports = grammar({
         $.array_literal,
       ),
 
-    member_expression: ($) => seq($.expression, ".", $.identifier),
+    member_expression: ($) => prec(2, seq($.expression, ".", $.identifier)),
 
     unary_expression: ($) =>
-      choice(seq($.expression, "++"), seq($.expression, "--")),
+      prec.right(
+        1,
+        choice(
+          seq(choice("!", "-", "+"), $.expression),
+          seq($.expression, "++"),
+          seq($.expression, "--"),
+        ),
+      ),
 
     binary_expression: ($) =>
       prec.left(

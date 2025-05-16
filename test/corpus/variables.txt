@@ -13,6 +13,18 @@ string projectKey = "TSTP";
     (string_literal))))
 
 ===
+variable declaration without assignment
+===
+
+string[] gpGranted;
+----
+(source_file
+  (variable_declaration
+    (type_specifier
+      (base_type))
+    (identifier)))
+
+===
 assignment
 ===
 issueKey = projectKey;

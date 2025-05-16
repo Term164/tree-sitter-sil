@@ -13,5 +13,4 @@
 (if_statement
   consequence: (block) @conditional.inner) @conditional.outer
 
-(for_statement
-  body: (block) @loop.inner) @loop.outer
+(for_statement (block) @loop.inner) @loop.outer

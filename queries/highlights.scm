@@ -15,6 +15,8 @@
 "catch" @keyword
 "function" @keyword
 "include" @keyword
+(struct_declaration
+  "struct" @keyword)
 
 ;; Types
 (type_specifier (base_type) @type)
