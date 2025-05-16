@@ -1,0 +1,35 @@
+=== custom field reference (ID)
+string val = customfield_12345;
+----
+(source_file
+  (variable_declaration
+    type: (type_specifier)
+    name: (identifier)
+    value: (expression (custom_field_value (field_reference_id)))))
+
+=== custom field reference (Name)
+string val = #{My Custom Field};
+----
+(source_file
+  (variable_declaration
+    type: (type_specifier)
+    name: (identifier)
+    value: (expression (custom_field_value (field_reference_named)))))
+
+=== scoped custom field (explicit context)
+string val = key.customfield_12345;
+----
+(source_file
+  (variable_declaration
+    type: (type_specifier)
+    name: (identifier)
+    value: (expression (custom_field_value (scoped_field_reference_id)))))
+
+=== scoped custom field with name
+string val = %key%.#{My Custom Field};
+----
+(source_file
+  (variable_declaration
+    type: (type_specifier)
+    name: (identifier)
+    value: (expression (custom_field_value (scoped_field_reference_named)))))

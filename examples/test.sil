@@ -1,0 +1,6 @@
+string projectKey= "TSTP";
+
+string issueType = "Sub-task";
+string issueSummary = "Issue created using SIL";
+//create function
+issue = createIssue(projectKey, key, issueType, issueSummary);

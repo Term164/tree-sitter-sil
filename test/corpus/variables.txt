@@ -1,0 +1,23 @@
+===
+variable declaration
+===
+
+string projectKey = "TSTP";
+----
+(source_file
+  (variable_declaration
+    type: (type_specifier
+      (base_type))
+    name: (identifier)
+    value: (expression
+    (string_literal))))
+
+===
+assignment
+===
+issueKey = projectKey;
+----
+(source_file
+  (assignment
+    left: (lvalue (identifier))
+    right: (expression (identifier))))

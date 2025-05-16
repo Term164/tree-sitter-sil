@@ -1,0 +1,450 @@
+===
+if/else statement
+===
+
+if (true) {
+  return;
+} else {
+  return "fallback";
+}
+----
+(source_file
+  (if_statement
+    (expression (boolean))
+    (block (return_statement))
+    (else_clause (block (return_statement (expression (string_literal)))))))
+
+===
+else if statement
+===
+
+if(issueType == "Bug" && environment == "Production") {
+    priority = "Highest";
+} else if (issueType == "Bug" && environment == "Development") {
+    priority = "Medium";
+} else {
+    priority = "Low";
+}
+----
+(source_file
+  (if_statement
+    (expression
+      (binary_expression
+        (expression
+          (binary_expression
+            (expression
+              (binary_expression
+                (expression
+                  (identifier))
+                (expression
+                  (string_literal))))
+            (expression
+              (identifier))))
+        (expression
+          (string_literal))))
+    (block
+      (assignment
+        (lvalue
+          (identifier))
+        (expression
+          (string_literal))))
+    (else_if_clause
+      (if_statement
+        (expression
+          (binary_expression
+            (expression
+              (binary_expression
+                (expression
+                  (binary_expression
+                    (expression
+                      (identifier))
+                    (expression
+                      (string_literal))))
+                (expression
+                  (identifier))))
+            (expression
+              (string_literal))))
+        (block
+          (assignment
+            (lvalue
+              (identifier))
+            (expression
+              (string_literal))))
+        (else_clause
+          (block
+            (assignment
+              (lvalue
+                (identifier))
+              (expression
+                (string_literal)))))))))
+===
+for loop
+===
+
+for (i = 0; i < 10; i = i + 1) {
+  print(i);
+}
+----
+ (source_file
+      (for_statement
+        (assignment
+          left: (lvalue
+            (identifier))
+          right: (expression
+            (number)))
+        (expression
+          (binary_expression
+            (expression
+              (identifier))
+            (expression
+              (number))))
+        (inline_assignment
+          left: (lvalue
+            (identifier))
+          right: (expression
+            (binary_expression
+              (expression
+                (identifier))
+              (expression
+                (number)))))
+        (block
+          (expression_statement
+            (expression
+              (function_call
+                function: (identifier)
+                (expression
+                  (identifier))))))))
+
+===
+foreach loop
+===
+for (string user in watchers) {
+  runnerLog(user);
+}
+----
+(source_file
+  (foreach_statement
+    (type_specifier
+      (base_type))
+    (identifier)
+    (expression
+      (identifier))
+    (block
+      (expression_statement
+        (expression
+          (function_call
+            (identifier)
+            (expression
+              (identifier))))))))
+
+===
+while loop
+===
+
+number i = 1;
+while (i <= 3) {
+  i = i + 1;
+}
+----
+(source_file
+      (variable_declaration
+        (type_specifier
+          (base_type))
+        (identifier)
+        (expression
+          (number)))
+      (while_statement
+        (expression
+          (binary_expression
+            (expression
+              (identifier))
+            (expression
+              (number))))
+        (block
+          (assignment
+            (lvalue
+              (identifier))
+            (expression
+              (binary_expression
+                (expression
+                  (identifier))
+                (expression
+                  (number))))))))
+
+===
+do-while loop
+===
+
+
+do {
+  i = i + 1;
+} while (i < 5);
+----
+(source_file
+    (do_while_statement
+      (block
+        (assignment
+          (lvalue
+            (identifier))
+          (expression
+            (binary_expression
+              (expression
+                (identifier))
+              (expression
+                (number))))))
+      (expression
+        (binary_expression
+          (expression
+            (identifier))
+          (expression
+            (number))))))
+
+===
+return with expression
+===
+return 123;
+----
+(source_file
+  (return_statement (expression (number))))
+
+===
+continue statement
+===
+
+number i = 1;
+while (i <= 10) {
+    if (i % 3 == 0) {
+        i++;        // Update counter before continue
+        continue;         // Skip printing multiples of 3
+    }
+    runnerLog(i);            // Prints: 1,2,4,5,7,8,10
+    i++;
+}
+
+----
+(source_file
+  (variable_declaration
+    (type_specifier
+      (base_type))
+    (identifier)
+    (expression
+      (number)))
+  (while_statement
+    (expression
+      (binary_expression
+        (expression
+          (identifier))
+        (expression
+          (number))))
+    (block
+      (if_statement
+        (expression
+          (binary_expression
+            (expression
+              (binary_expression
+                (expression
+                  (identifier))
+                (expression
+                  (number))))
+            (expression
+              (number))))
+        (block
+          (expression_statement
+            (expression
+              (unary_expression
+                (expression
+                  (identifier)))))
+          (comment)
+          (continue_statement)
+          (comment)))
+      (expression_statement
+        (expression
+          (function_call
+            (identifier)
+            (expression
+              (identifier)))))
+      (comment)
+      (expression_statement
+        (expression
+          (unary_expression
+            (expression
+              (identifier))))))))
+
+===
+break statement
+===
+
+for (number i = 0; i < 10; i++) {
+  if (i >= 5) {
+    break;  // Terminates loop when i reaches 5
+  }
+  runnerLog(i);  // Only prints 0,1,2,3,4
+}
+
+----
+(source_file
+(for_statement
+  (for_variable_declaration
+    (type_specifier
+      (base_type))
+    (identifier)
+    (expression
+      (number)))
+  (expression
+    (binary_expression
+      (expression
+        (identifier))
+      (expression
+        (number))))
+  (expression
+    (unary_expression
+      (expression
+        (identifier))))
+  (block
+    (if_statement
+      (expression
+        (binary_expression
+          (expression
+            (identifier))
+          (expression
+            (number))))
+      (block
+        (break_statement)
+        (comment)))
+    (expression_statement
+      (expression
+        (function_call
+          (identifier)
+          (expression
+            (identifier)))))
+    (comment))))
+
+===
+switch statement
+===
+
+switch (status) {
+  case "ERROR":
+      logError();
+  case "WARN":
+      sendAlert();
+      break;
+  case "INFO":
+      logMessage();
+      break;
+  default:
+      logUnknownStatus();
+}
+
+----
+(source_file
+(switch_statement
+  (expression
+    (identifier))
+  (case_clause
+    (expression
+      (string_literal))
+    (expression_statement
+      (expression
+        (function_call
+          (identifier)))))
+  (case_clause
+    (expression
+      (string_literal))
+    (expression_statement
+      (expression
+        (function_call
+          (identifier))))
+    (break_statement))
+  (case_clause
+    (expression
+      (string_literal))
+    (expression_statement
+      (expression
+        (function_call
+          (identifier))))
+    (break_statement))
+  (default_clause
+    (expression_statement
+      (expression
+        (function_call
+          (identifier)))))))
+
+===
+switch statement
+===
+
+throw "Error message";
+
+----
+(source_file
+(throw_statement
+  (expression
+    (string_literal))))
+
+===
+try catch statement
+===
+
+try {
+  runnerLog("Starting...");                   
+  throw "Error occurred";                     
+  runnerLog("Never reaches this line");       
+} catch string msg {                            
+  runnerLog("Caught string error: " + msg);   
+} catch number code {                           
+  runnerLog("Never reaches this line");
+}
+runnerLog("Continues here"); 
+
+----
+  (source_file
+      (try_catch_statement
+        (block
+          (expression_statement
+            (expression
+              (function_call
+                (identifier)
+                (expression
+                  (string_literal)))))
+          (throw_statement
+            (expression
+              (string_literal)))
+          (expression_statement
+            (expression
+              (function_call
+                (identifier)
+                (expression
+                  (string_literal))))))
+        (typed_catch_clause
+          (type_specifier
+            (base_type))
+          (identifier)
+          (block
+            (expression_statement
+              (expression
+                (function_call
+                  (identifier)
+                  (expression
+                    (binary_expression
+                      (expression
+                        (string_literal))
+                      (expression
+                        (identifier)))))))))
+        (typed_catch_clause
+          (type_specifier
+            (base_type))
+          (identifier)
+          (block
+            (expression_statement
+              (expression
+                (function_call
+                  (identifier)
+                  (expression
+                    (string_literal))))))))
+      (expression_statement
+        (expression
+          (function_call
+            (identifier)
+            (expression
+              (string_literal))))))

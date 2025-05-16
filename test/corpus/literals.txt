@@ -1,0 +1,140 @@
+===
+structure literal
+===
+
+Point p = {10, 20};
+----
+(source_file
+  (variable_declaration
+  type: (type_specifier
+    (base_type
+      (identifier)))
+    name: (identifier)
+    value: (expression 
+      (array_literal 
+        (expression
+          (number)) 
+        (expression
+        (number))))))
+
+===
+nested structure literal
+===
+
+PersonInfo person = {"John Doe", 50000.00, {10, 20}};
+----
+(source_file
+  (variable_declaration
+    type: (type_specifier
+      (base_type
+        (identifier)))
+    name: (identifier)
+    value: (expression
+      (array_literal
+        (expression
+          (string_literal))
+        (expression
+          (number))
+        (expression
+          (array_literal
+            (expression
+              (number))
+            (expression
+              (number))))))))
+
+===
+array literal (1D)
+===
+
+string[] names = {"Alice", "Bob", "Charlie"};
+----
+(source_file
+  (variable_declaration
+    type: (type_specifier
+      (base_type))
+    name: (identifier)
+    value: (expression (array_literal
+      (expression
+        (string_literal))
+      (expression
+        (string_literal))
+      (expression
+        (string_literal))))))
+
+===
+array literal (2D)
+===
+
+number[][] matrix = {
+  {1, 2, 3},
+  {4, 5, 6},
+  {7, 8, 9}
+};
+----
+(source_file
+  (variable_declaration
+    type: (type_specifier
+      (base_type))
+    name: (identifier)
+    value: (expression (array_literal
+      (expression
+        (array_literal
+          (expression
+            (number))
+          (expression
+            (number))
+          (expression
+            (number))))
+      (expression
+        (array_literal
+          (expression
+            (number))
+          (expression
+            (number))
+          (expression
+            (number))))
+      (expression
+        (array_literal
+          (expression
+            (number))
+          (expression
+            (number))
+          (expression
+            (number))))))))
+
+===
+null assignment
+===
+
+number x = null;
+----
+(source_file
+  (variable_declaration
+    type: (type_specifier
+      (base_type))
+    name: (identifier)
+    value: (expression (null_literal))))
+
+===
+nil assignment
+===
+
+number x = nil;
+----
+(source_file
+  (variable_declaration
+    type: (type_specifier
+      (base_type))
+    name: (identifier)
+    value: (expression (null_literal))))
+
+===
+Include Statement
+===
+
+include "file.incl";
+
+----
+(source_file
+  (include_statement
+    (string_literal)))

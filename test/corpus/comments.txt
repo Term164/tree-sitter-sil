@@ -1,0 +1,8 @@
+===
+comment only
+===
+
+// this is a comment
+----
+(source_file
+  (comment))
