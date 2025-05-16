@@ -24,6 +24,19 @@
 (identifier) @variable
 (field_reference) @property
 
+(struct_declaration
+  "struct" @keyword
+  name: (identifier) @type)
+
+(structure_literal "{" @punctuation.bracket "}" @punctuation.bracket)
+
+(member_expression
+  "." @operator
+  (identifier) @field)
+
+(variable_declaration
+  name: (identifier) @variable)
+
 ;; Literals
 (string_literal) @string
 (number) @number

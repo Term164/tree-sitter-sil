@@ -1,35 +1,49 @@
-=== custom field reference (ID)
+===
+custom field reference (ID)
+===
 string val = customfield_12345;
 ----
 (source_file
   (variable_declaration
-    type: (type_specifier)
+    type: (type_specifier
+      (base_type))
     name: (identifier)
-    value: (expression (custom_field_value (field_reference_id)))))
+    value: (expression (identifier))))
 
-=== custom field reference (Name)
-string val = #{My Custom Field};
-----
-(source_file
-  (variable_declaration
-    type: (type_specifier)
-    name: (identifier)
-    value: (expression (custom_field_value (field_reference_named)))))
+===
+scoped custom field (explicit context)
+===
 
-=== scoped custom field (explicit context)
 string val = key.customfield_12345;
 ----
 (source_file
   (variable_declaration
-    type: (type_specifier)
+    type: (type_specifier
+    (base_type))
     name: (identifier)
-    value: (expression (custom_field_value (scoped_field_reference_id)))))
+    value: (expression  
+      (member_expression
+        (expression
+          (identifier))
+        (identifier)))))
 
-=== scoped custom field with name
-string val = %key%.#{My Custom Field};
+===
+Struct
+===
+
+struct Foo {
+  string a;
+  number b;
+}
 ----
 (source_file
-  (variable_declaration
-    type: (type_specifier)
-    name: (identifier)
-    value: (expression (custom_field_value (scoped_field_reference_named)))))
+  (struct_declaration
+    (identifier)
+    (struct_field
+      (type_specifier
+        (base_type))
+      (identifier))
+    (struct_field
+      (type_specifier
+        (base_type))
+      (identifier))))

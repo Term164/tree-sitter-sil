@@ -16,3 +16,4 @@
 (switch_statement) @fold
 (case_clause) @fold
 (default_clause) @fold
+(structure_literal) @fold

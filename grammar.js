@@ -45,6 +45,7 @@ module.exports = grammar({
         $.do_while_statement,
         $.return_statement,
         $.function_declaration,
+        $.struct_declaration,
         $.function_call,
         $.expression_statement,
         $.break_statement,
@@ -99,6 +100,18 @@ module.exports = grammar({
       ),
 
     lvalue: ($) => choice($.identifier, $.field_reference, $.member_expression),
+
+    struct_declaration: ($) =>
+      seq(
+        "struct",
+        field("name", $.identifier),
+        "{",
+        repeat($.struct_field),
+        "}",
+      ),
+
+    struct_field: ($) =>
+      seq(field("type", $.type_specifier), field("name", $.identifier), ";"),
 
     include_statement: ($) => seq("include", $.string_literal, ";"),
 
@@ -205,7 +218,7 @@ module.exports = grammar({
         "(",
         optional(seq($.identifier, repeat(seq(",", $.identifier)))),
         ")",
-        $.block,
+        field("body", $.block),
       ),
 
     function_call: ($) =>
